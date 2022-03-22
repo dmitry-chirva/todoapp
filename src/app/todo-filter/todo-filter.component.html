@@ -1,0 +1,23 @@
+<footer class="footer">
+  <span class="todo-count">
+    <strong>{{ todoLength }}</strong> item left
+  </span>
+  <ul class="filters">
+    <li>
+      <a routerLink=""
+         routerLinkActive="selected"
+         [routerLinkActiveOptions]="{exact:true}">All</a>
+    </li>
+    <li>
+      <a routerLink="/active"
+         routerLinkActive="selected"
+         [routerLinkActiveOptions]="{exact:true}">Active</a>
+    </li>
+    <li>
+      <a routerLink="/completed"
+         routerLinkActive="selected"
+         [routerLinkActiveOptions]="{exact:true}">Completed</a>
+    </li>
+  </ul>
+  <button class="clear-completed" (click)="handleClearAllTodos()">Clear completed</button>
+</footer>

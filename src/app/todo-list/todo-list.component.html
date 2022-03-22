@@ -1,0 +1,12 @@
+<todoapp-toggle [isCheck]="(isAllCompleted$ | async)"
+                (onChange)="toggleAll($event)">
+</todoapp-toggle>
+
+<ul class="todo-list" *ngIf="todos$">
+  <todoapp-todo-item
+    *ngFor="let todo of todos$ | async"
+    [todoItem]="todo"
+    (onChanged)="updateTodo($event)"
+    (onRemove)="removeTodo($event)">
+  </todoapp-todo-item>
+</ul>

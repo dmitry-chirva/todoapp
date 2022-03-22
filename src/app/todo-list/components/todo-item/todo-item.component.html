@@ -1,0 +1,20 @@
+<li *ngIf="todoItem && todoForm"
+    [class.completed]="todoItem.isCompleted"
+    [class.editing]="isEditing"
+    [formGroup]="todoForm"
+    (dblclick)="enableEditMode(editField)">
+  <div class="view">
+    <input class="toggle"
+           type="checkbox"
+           formControlName="completeField"
+           (change)="handleChangeTodo()">
+    <label>{{ todoItem.name }}</label>
+    <button class="destroy"
+            (click)="removeTodo()"></button>
+  </div>
+  <input #editField
+         class="edit"
+         formControlName="editNameField"
+         (keydown.enter)="handleChangeTodo()"
+         (blur)="handleChangeTodo()">
+</li>
