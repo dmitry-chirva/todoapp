@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
-  mergeAll,
   Observable,
 } from 'rxjs';
 import {
-  filter,
   map,
 } from 'rxjs/operators';
 import { TodoItem } from '../../shared/interfaces/todo-item.interface';
@@ -26,7 +24,7 @@ export class TodoStoreService {
 
   getFiltered$(state: string): Observable<any> {
     return this.getTodos$().pipe(
-      filter(list => list.some(item => this.filters[state] ? item.isCompleted === this.filters[state] : true)),
+      map(list => list.filter(item => this.filters[state] !== undefined ? item.isCompleted === this.filters[state] : true)),
     )
   }
 

@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "coverage:generate": "ng test --watch=false --code-coverage --browsers ChromeHeadlessNoSandbox",
     "test": "ng test"
   },
   "private": true,
@@ -36,6 +37,8 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "ng2-mock-component": "^0.2.0",
+    "ngx-mock-provider": "^1.0.6",
     "typescript": "~4.6.2"
   }
 }
