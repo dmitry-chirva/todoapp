@@ -1,9 +1,10 @@
 <header class="header">
   <h1>todos</h1>
-  <input #newTodoField
-         class="new-todo"
+  <input class="new-todo"
+         #newTodoField
          [(ngModel)]="todoName"
          placeholder="What needs to be done?"
          autofocus
          (keydown.enter)="addTodo()">
 </header>
+

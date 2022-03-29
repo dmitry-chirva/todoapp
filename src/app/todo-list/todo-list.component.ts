@@ -1,26 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-
-import { TodoStoreService } from '../core/todo-store/todo-store.service';
 import { TodoItem } from '../shared/interfaces/todo-item.interface';
+import { TodoStoreService } from '../core/todo-store/todo-store.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'todoapp-todo-list',
+  selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss']
 })
 export class TodoListComponent implements OnInit {
   todos$: Observable<TodoItem[]> | undefined;
-  isAllCompleted$: Observable<boolean> | undefined
+  isAllCompleted$: Observable<boolean> | undefined;
 
-  private readonly statusFilter: string = ""
+  private statusFilter = "";
 
   constructor(
     private todoStoreService: TodoStoreService,
     private route: ActivatedRoute
   ) {
-    this.statusFilter = this.route.snapshot.data['status'];
+    this.statusFilter = this.route.snapshot.data['status']
   }
 
   ngOnInit(): void {
@@ -28,7 +27,7 @@ export class TodoListComponent implements OnInit {
     this.isAllCompleted$ = this.todoStoreService.isAllCompleted$();
   }
 
-  toggleAll(isCompleted: boolean): void {
+  toggleAllComplete(isCompleted: boolean): void {
     const todos = this.todoStoreService.getTodos().map(item => ({ ...item, isCompleted }));
 
     this.todoStoreService.setTodos(todos);
@@ -38,7 +37,8 @@ export class TodoListComponent implements OnInit {
     this.todoStoreService.updateTodo(todoItem);
   }
 
-  removeTodo({ id }: TodoItem) {
+  removeTodo(id: string) {
     this.todoStoreService.removeTodoById(id);
   }
+
 }

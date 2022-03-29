@@ -3,20 +3,21 @@ import { TodoItem } from '../../../shared/interfaces/todo-item.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'todoapp-todo-item',
+  selector: 'app-todo-item',
   templateUrl: './todo-item.component.html',
   styleUrls: ['./todo-item.component.scss']
 })
 export class TodoItemComponent implements OnInit {
   @Input() todoItem: TodoItem | undefined;
 
-  @Output() onChanged: EventEmitter<TodoItem> = new EventEmitter<TodoItem>();
-  @Output() onRemove: EventEmitter<TodoItem> = new EventEmitter<TodoItem>();
+  @Output() onChange: EventEmitter<TodoItem> = new EventEmitter<TodoItem>();
+  @Output() onRemove: EventEmitter<string> = new EventEmitter<string>();
 
   todoForm: FormGroup | undefined;
-  isEditing = false;
+  isEditing: boolean = false;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) {
+  }
 
   ngOnInit(): void {
     this.todoForm = this.formBuilder.group({
@@ -26,16 +27,17 @@ export class TodoItemComponent implements OnInit {
   }
 
   handleChangeTodo(): void {
-    const { completeField, editNameField } = this.todoForm?.getRawValue()
-    const changedTodo = <TodoItem>{
+    const { completeField, editNameField } = this.todoForm?.getRawValue();
+    const changedTodo = <TodoItem> {
       name: editNameField,
       isCompleted: completeField
     }
 
-    this.onChanged.emit({
+    this.onChange.emit({
       ...this.todoItem,
       ...changedTodo
-    })
+    });
+
     this.disableEditMode();
   }
 
@@ -44,7 +46,7 @@ export class TodoItemComponent implements OnInit {
 
     setTimeout(() => {
       editField.focus();
-    }, 0)
+    }, 0);
   }
 
   disableEditMode(): void {
@@ -52,7 +54,6 @@ export class TodoItemComponent implements OnInit {
   }
 
   removeTodo(): void {
-    this.onRemove.emit(this.todoItem);
+    this.onRemove.emit(this.todoItem?.id);
   }
-
 }

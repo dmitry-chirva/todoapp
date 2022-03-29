@@ -1,4 +1,16 @@
-import { StringUtils } from './string-utils';
+import { TestBed } from '@angular/core/testing';
 
-describe('StringUtils', () => {
+import { StringUtils } from './string.utils';
+
+xdescribe('String.UtilsService', () => {
+  let service: StringUtils;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(StringUtils);
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
 });

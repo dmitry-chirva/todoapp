@@ -9,8 +9,7 @@
            formControlName="completeField"
            (change)="handleChangeTodo()">
     <label>{{ todoItem.name }}</label>
-    <button class="destroy"
-            (click)="removeTodo()"></button>
+    <button class="destroy" (click)="removeTodo()"></button>
   </div>
   <input #editField
          class="edit"

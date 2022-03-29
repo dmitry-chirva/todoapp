@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ApplicationContainerComponent } from './application-container.component';
 
-
 const routes: Routes = [
   {
     path: '',

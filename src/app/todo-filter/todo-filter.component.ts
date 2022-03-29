@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'todoapp-todo-filter',
+  selector: 'app-todo-filter',
   templateUrl: './todo-filter.component.html',
   styleUrls: ['./todo-filter.component.scss']
 })
 export class TodoFilterComponent {
-  @Input() todoLength: number | undefined  = 0;
+  @Input() todoLength: number | undefined = 0;
   @Output() onClearAllTodos: EventEmitter<void> = new EventEmitter<void>();
 
   handleClearAllTodos(): void {

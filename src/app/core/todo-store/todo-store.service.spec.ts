@@ -13,7 +13,7 @@ describe('TodoStoreService', () => {
     },
     {
       id: '2',
-      name: 'Tes2',
+      name: 'Test2',
       isCompleted: false
     },
     {
@@ -32,99 +32,122 @@ describe('TodoStoreService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get todos', () => {
-    const expectResult = <TodoItem[]>[];
-
-    service.getTodos$()
-      .subscribe(todos => {
-        expect(todos).toEqual(expectResult);
-      });
-  });
-
   it('should get todos as observable', () => {
+    // Act
     const expectResult = <TodoItem[]>[];
 
+    // Assert
+    // Arrange
     service.getTodos$()
       .subscribe(todos => {
-        expect(todos).toEqual(expectResult);
-      });
+        expect(todos).toEqual(expectResult)
+      })
   });
 
   it('should set todos', () => {
+    // Act
     const expectResult = <TodoItem[]>[...todos];
 
-    service.setTodos(expectResult);
+    // Assert
+    service.setTodos(todos);
 
+    // Arrange
     service.getTodos$()
       .subscribe(todos => {
-        expect(todos).toEqual(expectResult);
-      });
+        expect(todos).toEqual(expectResult)
+      })
   });
 
-  it('should get todos', () => {
+  it('should get todos as array', () => {
+    // Act
     const expectResult = <TodoItem[]>[...todos];
 
-    service.setTodos(expectResult);
+    // Assert
+    service.setTodos(todos);
 
+    // Arrange
     expect(service.getTodos()).toEqual(expectResult)
   });
 
-  describe('isAllCompleted$', () => {
-    it('should get false when it least one of todos no complete', () => {
-      const expectResult = <TodoItem[]>[...todos];
-      service.setTodos(expectResult);
+  it('should get todos as array', () => {
+    // Act
+    const expectResult = <TodoItem[]>[...todos];
 
-      service.isAllCompleted$()
-        .subscribe(isComplete => {
-          expect(isComplete).toBeFalse();
-        })
-    });
+    // Assert
+    service.setTodos(todos);
 
-    it('should get true when all test complete', () => {
-      const expectResult = <TodoItem[]>todos.map((todo) => ({ ...todo, isCompleted: true }));
-      service.setTodos(expectResult);
-
-      service.isAllCompleted$()
-        .subscribe(isComplete => {
-          console.log(isComplete)
-        })
-
-      expect(service.getTodos()).toEqual(expectResult)
-    });
+    // Arrange
+    expect(service.getTodos()).toEqual(expectResult)
   });
 
   describe('getFiltered$', () => {
-    it('should get all todo', () => {
+    it('should get all todos', () => {
+      // Act
       const expectResult = <TodoItem[]>[...todos];
       const statusAll = '';
-      service.setTodos(expectResult);
+      service.setTodos(todos);
 
+      // Assert
+      // Arrange
       service.getFiltered$(statusAll)
         .subscribe(todos => {
-          expect(todos).toEqual(expectResult);
+          expect(todos).toEqual(expectResult)
         })
-    });
+    })
 
-    it('should get only active todo', () => {
+    it('should get active todos', () => {
+      // Act
       const expectResult = <TodoItem[]>[...todos].filter(todo => !todo.isCompleted);
-      const statusAll = 'active';
-      service.setTodos(expectResult);
+      const statusActive = 'active';
+      service.setTodos(todos);
 
-      service.getFiltered$(statusAll)
+      // Assert
+      // Arrange
+      service.getFiltered$(statusActive)
         .subscribe(todos => {
-          expect(todos).toEqual(expectResult);
+          expect(todos).toEqual(expectResult)
         })
-    });
+    })
 
-    it('should get completed todo', () => {
+    it('should get completed todos', () => {
+      // Act
       const expectResult = <TodoItem[]>[...todos].filter(todo => todo.isCompleted);
-      const statusAll = 'completed';
-      service.setTodos(expectResult);
+      const statusCompleted = 'completed';
+      service.setTodos(todos);
 
-      service.getFiltered$(statusAll)
+      // Assert
+      // Arrange
+      service.getFiltered$(statusCompleted)
         .subscribe(todos => {
-          expect(todos).toEqual(expectResult);
+          expect(todos).toEqual(expectResult)
         })
-    });
+    })
+  });
+
+  describe('isAllCompleted$', () => {
+    it('should get false when it least one of todos are not completed', () => {
+      // Act
+      service.setTodos(todos);
+
+      // Assert
+      // Arrange
+      service.isAllCompleted$()
+        .subscribe(isCompleted => {
+          expect(isCompleted).toBeFalse()
+        })
+    })
+
+    it('should get true when it all todos are completed', () => {
+      // Act
+      const newTodos = <TodoItem[]>[...todos].map(todo => ({...todo, isCompleted: true}));
+      service.setTodos(newTodos);
+
+      // Assert
+      // Arrange
+      service.isAllCompleted$()
+        .subscribe(isCompleted => {
+          expect(isCompleted).toBeTruthy()
+        })
+    })
   });
 });

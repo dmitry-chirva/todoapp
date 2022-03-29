@@ -1,14 +1,13 @@
 import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'todoapp-header',
+  selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
   @ViewChild("newTodoField") newTodoField: ElementRef | undefined;
   @Output() onAddTodo: EventEmitter<string> = new EventEmitter<string>();
-
   todoName: string = "";
 
   addTodo(): void {
@@ -18,5 +17,4 @@ export class HeaderComponent {
 
     this.onAddTodo.emit(this.todoName);
   }
-
 }

@@ -1,19 +1,13 @@
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-} from 'rxjs';
-import {
-  map,
-} from 'rxjs/operators';
+import { BehaviorSubject, filter, map, Observable } from 'rxjs';
 import { TodoItem } from '../../shared/interfaces/todo-item.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoStoreService {
-  private todos$ = new BehaviorSubject<TodoItem[]>([]);
-  private readonly filters: Record<string, boolean> = {
+  private todos$ = new BehaviorSubject<TodoItem[]>([])
+  private readonly statusFilter: Record<string, boolean> = {
     "active": false,
     "completed": true
   }
@@ -22,20 +16,24 @@ export class TodoStoreService {
     return this.todos$.asObservable();
   }
 
-  getFiltered$(state: string): Observable<any> {
-    return this.getTodos$().pipe(
-      map(list => list.filter(item => this.filters[state] !== undefined ? item.isCompleted === this.filters[state] : true)),
-    )
+  getFiltered$(state: string): Observable<TodoItem[]> {
+    return this.getTodos$()
+      .pipe(
+        map(list => list.filter(item =>
+          this.statusFilter[state] !== undefined ? item.isCompleted === this.statusFilter[state] : true)
+        )
+      );
   }
 
   getTodos(): TodoItem[] {
     return this.todos$.getValue();
   }
 
-  isAllCompleted$(): Observable<any> {
-    return this.todos$.pipe(
-      map(list => list.every(item => item.isCompleted))
-    )
+  isAllCompleted$(): Observable<boolean> {
+    return this.getTodos$()
+      .pipe(
+        map(list => list.every(item => item.isCompleted))
+      )
   }
 
   hasTodoName(name: string): boolean {
@@ -55,11 +53,11 @@ export class TodoStoreService {
 
     const todos = this.getTodos().map(item => {
       if(todoItem.id === item.id) {
-        return todoItem;
+        return todoItem
       }
 
       return item
-    });
+    })
 
     this.setTodos(todos)
   }
@@ -67,16 +65,17 @@ export class TodoStoreService {
   removeTodoById(id: string): void {
     const todos = this.getTodos().filter(item => item.id !== id);
 
-    this.setTodos(todos);
+    this.setTodos(todos)
   }
 
   clearCompleteTodos(): void {
     const todos = this.getTodos().filter(item => !item.isCompleted);
 
-    this.setTodos(todos);
+    this.setTodos(todos)
   }
 
   setTodos(todos: TodoItem[]): void {
     this.todos$.next(todos);
   }
+
 }

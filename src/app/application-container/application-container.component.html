@@ -1,9 +1,9 @@
 <div class="todoapp">
-  <todoapp-header (onAddTodo)="addTodo($event)"></todoapp-header>
+  <app-header (onAddTodo)="addTodo($event)"></app-header>
   <main class="main">
-    <todoapp-todo-list></todoapp-todo-list>
+    <app-todo-list></app-todo-list>
   </main>
-  <todoapp-todo-filter *ngIf="todos$ && (todos$ | async)?.length"
-                       [todoLength]="(todos$ | async)?.length"
-                        (onClearAllTodos)="clearAllTodos()"></todoapp-todo-filter>
+  <app-todo-filter *ngIf="todos$ && (todos$ | async)?.length"
+                   [todoLength]="(todos$ | async)?.length"
+                   (onClearAllTodos)="clearAllTodos()"></app-todo-filter>
 </div>

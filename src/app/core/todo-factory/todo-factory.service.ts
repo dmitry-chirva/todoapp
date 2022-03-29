@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, filter, Observable } from 'rxjs';
 import { TodoItem } from '../../shared/interfaces/todo-item.interface';
-import { StringUtils } from '../../shared/utils/string-utils';
+import { StringUtils } from '../../shared/utils/string.utils';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +10,14 @@ export class TodoFactoryService {
     const id = StringUtils.generateUID();
     const isCompleted = false;
 
-    return <TodoItem>{
+    return <TodoItem> {
       id,
       name,
       isCompleted
     }
+  }
+
+  private getTest(): string {
+    return 'This is test';
   }
 }
